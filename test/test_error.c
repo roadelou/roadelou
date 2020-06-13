@@ -1,4 +1,6 @@
-/* This test functions are meant to verify the functionnality of roadelou_error, but also to showcase how the functions in roadelou_error.h are meant to be used. */
+/* This test functions are meant to verify the functionnality of roadelou_error,
+ * but also to showcase how the functions in roadelou_error.h are meant to be
+ * used. */
 
 /* The library we are testing */
 #include <roadelou_error.h>
@@ -22,12 +24,13 @@ int main(int argc, char const *argv[]) {
   /* The variable used to perform the tests */
   Status test;
 
-  /* Unlike in this test bench, the error struct is not supoosed to be used directly */
+  /* Unlike in this test bench, the error struct is not supoosed to be used
+   * directly */
   test = failing_silent_function();
   /* Testing the check function */
   assert(check(test) == FALSE);
   /* Testing the catch function */
-  assert(catch(test) == CATCH_FAIL);
+  assert(catch (test) == CATCH_FAIL);
   /* Testing if the error.code was set correctly */
   assert(error.code == 0);
   /* Testing if copy_message works correctly */
@@ -37,7 +40,7 @@ int main(int argc, char const *argv[]) {
   /* Testing the check function */
   assert(check(test) == FALSE);
   /* Testing the catch function */
-  assert(catch(test) == CATCH_FAIL);
+  assert(catch (test) == CATCH_FAIL);
   /* Testing if the error.code was set correctly */
   assert(error.code == 0);
   /* Testing if copy_message works correctly */
@@ -47,7 +50,7 @@ int main(int argc, char const *argv[]) {
   /* Testing the check function */
   assert(check(test) == FALSE);
   /* Testing the catch function */
-  assert(catch(test) == 45);
+  assert(catch (test) == 45);
   /* Testing if copy_message works correctly */
   assert(strcmp(error.msg, "The warning code is: 45\n") == 0);
 
@@ -55,7 +58,7 @@ int main(int argc, char const *argv[]) {
   /* Testing the check function */
   assert(check(test) == TRUE);
   /* Testing the catch function */
-  assert(catch(test) == CATCH_OK);
+  assert(catch (test) == CATCH_OK);
   /* Testing if the error.code was set correctly */
   assert(error.code == 0);
   /* Testing if copy_message works correctly */
@@ -79,6 +82,4 @@ Status warning_function(void) {
   return warn(45, "%s %d\n", "The warning code is:", 45);
 }
 
-Status succeeding_function(void) {
-  return ok();
-}
+Status succeeding_function(void) { return ok(); }

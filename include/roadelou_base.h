@@ -20,7 +20,7 @@
 #include <assert.h>
 
 /* For the sake of readability, we also define TRUE and FALSE to be 1 and 0
-* respectively. */
+ * respectively. */
 #ifndef TRUE
 #define TRUE 1
 #endif
@@ -28,6 +28,5 @@
 #ifndef FALSE
 #define FALSE 0
 #endif
-
 
 #endif /* end of include guard: BASE_LIBRARY_INCLUDED */

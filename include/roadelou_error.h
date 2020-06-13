@@ -38,7 +38,8 @@ struct Error {
 typedef struct Error Error;
 
 /*
-Because I don't write a lot of multithreaded code, I use an unsafe global instance of Error to make the function more concise.
+Because I don't write a lot of multithreaded code, I use an unsafe global
+instance of Error to make the function more concise.
 */
 extern Error error;
 
@@ -84,7 +85,8 @@ error and to set the Error struct accordingly. It is meant to be used directly
 with return.
 
 It is safe to pass NULL as a message, in this case "(no message)" will be used
-as the error message. fail supports printf style format and sets error.code to 0.
+as the error message. fail supports printf style format and sets error.code to
+0.
 
 Its return value is always Status.FAILURE.
 
@@ -113,7 +115,8 @@ Status warn(const unsigned short code, const char *msg, ...);
 This function is a shortcut to declare that the current function did run
 successfully. It is meant to be used directly with return.
 
-ok sets the message in error to the default "(no message)" and sets error.code = 0.
+ok sets the message in error to the default "(no message)" and sets error.code =
+0.
 
 NOTE: Your compiler is very likely to inline this function.
 

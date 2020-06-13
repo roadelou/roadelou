@@ -8,11 +8,14 @@ Error error;
 /* The size allocated for the msg pointer of error. */
 static size_t len = 0;
 
-/* A helper function to copy an error message to error. Note that this function does not use error to log its own errors (obviously), it just returns a Status enum */
+/* A helper function to copy an error message to error. Note that this function
+ * does not use error to log its own errors (obviously), it just returns a
+ * Status enum */
 static Status copy_message(const char *msg, va_list args);
 
 int check(const Status code) {
-  /* We explicitely return TRUE and FALSE so that the results of this function remain consistent if TRUE and FALSE are redifined (for some reason). */
+  /* We explicitely return TRUE and FALSE so that the results of this function
+   * remain consistent if TRUE and FALSE are redifined (for some reason). */
   if (code == SUCCESS) {
     return TRUE;
   } else {
@@ -22,15 +25,15 @@ int check(const Status code) {
 
 int catch (const Status code) {
   switch (code) {
-    case SUCCESS:
-      return CATCH_OK;
-    case WARNING:
-      /* We return the value contained in the global instance of Error */
-      return error.code;
-    case FAILURE:
-      /* Falling through to CATCH_FAIL, same behavior with invalid error code */
-    default:
-      return CATCH_FAIL;
+  case SUCCESS:
+    return CATCH_OK;
+  case WARNING:
+    /* We return the value contained in the global instance of Error */
+    return error.code;
+  case FAILURE:
+    /* Falling through to CATCH_FAIL, same behavior with invalid error code */
+  default:
+    return CATCH_FAIL;
   }
 }
 
@@ -83,7 +86,7 @@ Status copy_message(const char *msg, va_list args) {
 
   /* First we check if msg is NULL */
   if (msg == NULL) {
-    size_msg = 13 * sizeof(char);  /* strlen("(no message)") + 1 */
+    size_msg = 13 * sizeof(char); /* strlen("(no message)") + 1 */
 
     /* Setting error.msg to a default message */
     if (len == 0) { /* i.e. error has not been initialized yet */
@@ -95,10 +98,10 @@ Status copy_message(const char *msg, va_list args) {
       };
       error.msg = buffer;
       len = size_msg;
-    }
-    else if (len < size_msg) {
+    } else if (len < size_msg) {
       /* Reallocating more memory for our message */
-      /* I know that not checking the return of realloc is wrong, but I have nothing particular to do if it fails */
+      /* I know that not checking the return of realloc is wrong, but I have
+       * nothing particular to do if it fails */
       buffer = realloc(error.msg, size_msg);
       /* Asserting that buffer is not NULL */
       if (buffer == NULL) {
@@ -112,25 +115,29 @@ Status copy_message(const char *msg, va_list args) {
 
     /* We copy the error message */
     strncpy(error.msg, "(no message)", size_msg);
-  }
-  else {
-    /* We have to create a copy of args in case we have to parse them a second time. We assume that the std we are linking against is C99 (even if our code style is C90). */
+  } else {
+    /* We have to create a copy of args in case we have to parse them a second
+     * time. We assume that the std we are linking against is C99 (even if our
+     * code style is C90). */
     va_copy(args2, args);
 
-    /* We try one first time to copy our message, hoping that we have enough space to so in our error.msg buffer */
-    /* We assume that the glibc version used is >= 2.1, which is important for the return value of vsnprintf */
+    /* We try one first time to copy our message, hoping that we have enough
+     * space to so in our error.msg buffer */
+    /* We assume that the glibc version used is >= 2.1, which is important for
+     * the return value of vsnprintf */
     size_msg = vsnprintf(error.msg, len, msg, args);
     /* On error, a negative value is returned */
     if (size_msg <= 0) {
       return FAILURE;
     }
 
-    /* Note : freeing args is not our reposibility, it should be done in the caller */
+    /* Note : freeing args is not our reposibility, it should be done in the
+     * caller */
     /* va_end(args); */
 
     if (len == 0) {
       /* i.e. error.msg had not been allocated yet */
-      buffer = malloc(size_msg + 1);  /* +1 for '\0' */
+      buffer = malloc(size_msg + 1); /* +1 for '\0' */
       if (buffer == NULL) {
         return FAILURE;
       }
@@ -143,8 +150,7 @@ Status copy_message(const char *msg, va_list args) {
       if (size_msg + 1 != len) { /* + 1 for the '\0' */
         return FAILURE;
       }
-    }
-    else if (size_msg > len) {
+    } else if (size_msg > len) {
       /* i.e. the msg was truncated, we realloc the error.msg string */
       buffer = realloc(error.msg, size_msg + 1);
       if (buffer == NULL) {
@@ -157,7 +163,7 @@ Status copy_message(const char *msg, va_list args) {
       /* We try to copy the message once more */
       size_msg = vsnprintf(error.msg, len, msg, args2);
       /* If the copy did not work on the second try, we give up */
-      if (size_msg + 1 != len) {  /* + 1 for the '\0' */
+      if (size_msg + 1 != len) { /* + 1 for the '\0' */
         return FAILURE;
       }
     }

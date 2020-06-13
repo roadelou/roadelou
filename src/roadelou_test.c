@@ -14,8 +14,7 @@ Status test(const int testno, const int test_condition) {
     /* We just increment the success counter */
     testBench.success++;
     return SUCCESS;
-  }
-  else {
+  } else {
     /* First, we check if failno has been allocated */
     if (testBench.failure == 0) {
       buffer = malloc(TEST_CHUNK * sizeof(int));
@@ -30,15 +29,15 @@ Status test(const int testno, const int test_condition) {
     /* We have to realloc once the units reach a TEST_CHUNK */
     else if (testBench.failure % TEST_CHUNK == 0) {
       /* We allocated one more TEST_CHUNK */
-      buffer = realloc(testBench.failno, (testBench.failure + TEST_CHUNK) * sizeof(int));
+      buffer = realloc(testBench.failno,
+                       (testBench.failure + TEST_CHUNK) * sizeof(int));
       if (buffer == NULL) {
         return FAILURE;
       }
       testBench.failno = buffer;
       /* Putting the test number in failno */
       testBench.failno[testBench.failure] = testno;
-    }
-    else {
+    } else {
       /* There is no need to realloc, we have enough space to put the testno */
       testBench.failno[testBench.failure] = testno;
     }

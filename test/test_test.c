@@ -34,7 +34,7 @@ int main(int argc, char const *argv[]) {
   /* Looking if testBench.failure is correct */
   assert(testBench.failure == 1);
   /* Looking if testBench.failno is correct */
-  assert(testBench.failno[i-1] == i-1);
+  assert(testBench.failno[i - 1] == i - 1);
 
   mcheck_check_all();
 
@@ -45,7 +45,7 @@ int main(int argc, char const *argv[]) {
   /* Looking if testBench.failure is correct */
   assert(testBench.failure == 2);
   /* Looking if testBench.failno is correct */
-  assert(testBench.failno[i-1] == i-1);
+  assert(testBench.failno[i - 1] == i - 1);
 
   mcheck_check_all();
 
@@ -58,7 +58,7 @@ int main(int argc, char const *argv[]) {
   /* Looking if testBench.failure is correct */
   assert(testBench.failure == 2 * TEST_CHUNK);
   /* Looking if testBench.failno is correct */
-  assert(testBench.failno[i-1] == i-1);
+  assert(testBench.failno[i - 1] == i - 1);
 
   mcheck_check_all();
 
