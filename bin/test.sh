@@ -1,7 +1,16 @@
 #!/usr/bin/env bash
 
-# Source : https://stackoverflow.com/questions/59895/how-to-get-the-source-directory-of-a-bash-script-from-within-the-script-itself
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+# This script is meant to be run from within the bin directory
+export LD_LIBRARY_PATH=./:$LD_LIBRARY_PATH
 
-export LD_LIBRARY_PATH=$DIR/:$LD_LIBRARY_PATH
-exec $DIR/test_libRoadelou.elf
+# Testing the error part of the library
+if [[ -e ./test_error.elf ]]
+then
+  ./test_error.elf
+fi
+
+# Testing the test part of the library
+if [[ -e ./test_test.elf ]]
+then
+  ./test_test.elf
+fi
