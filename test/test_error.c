@@ -64,6 +64,9 @@ int main(int argc, char const *argv[]) {
   /* Testing if copy_message works correctly */
   assert(strcmp(error.msg, "(no message)") == 0);
 
+  /* Freing memory */
+  end_error();
+  
   printf("---> %s <---\n", "Test of error succeeded");
   return 0;
 }

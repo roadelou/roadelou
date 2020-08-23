@@ -124,4 +124,7 @@ Its return value is always Status.SUCCESS
 */
 Status ok(void);
 
+/* A small helper function to free any memory allocated to error handling */
+Status end_error(void);
+
 #endif /* end of include guard: ERROR_LIBRARY_INCLUDED */

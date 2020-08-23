@@ -62,6 +62,11 @@ int main(int argc, char const *argv[]) {
 
   mcheck_check_all();
 
+  /* Testing outputting the summary of a test. */
+  assert(check(test_summary()));
+  
+  mcheck_check_all();
+
   end_test();
 
   mcheck_check_all();

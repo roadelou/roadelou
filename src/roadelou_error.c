@@ -4,7 +4,7 @@
 #include <stdarg.h>
 
 /* Global instance of the Error struct */
-Error error;
+Error error = {0, NULL};
 /* The size allocated for the msg pointer of error. */
 static size_t len = 0;
 
@@ -173,5 +173,18 @@ Status copy_message(const char *msg, va_list args) {
   }
 
   /* If we reached this line, then the execution was a success */
+  return SUCCESS;
+}
+
+Status end_error(void) {
+  /* First, we test if any memory was allocated */
+  if (len > 0 && error.msg != NULL) {
+    /* Freing the msg memory */
+    free(error.msg);
+  }
+  /* Resetting global values */
+  len = 0;
+  error.code = 0;
+  error.msg = NULL;
   return SUCCESS;
 }

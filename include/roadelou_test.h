@@ -35,10 +35,18 @@ test_condition is the boolean that you are testing: the test is considered
 successfull if test_condition is TRUE (==1) and it is a failure if
 test_condition is set to any other value, FALSE (==0) in particular.
 
-This function returns a status indicating whether it managed to do its jub or
+This function returns a status indicating whether it managed to do its job or
 not. It will return either SUCCESS or FAILURE.
 */
 Status test(const int testno, const int test_condition);
+
+/*
+This function should be called at the end of the test bench. It will print a
+nice summary of the results of the tests.
+
+This is a read-only method, it won't change the state of the test bench.
+*/
+Status test_summary(void);
 
 /*
 Small helper function to free any memory that was allocated to the test bench.
